@@ -10,6 +10,15 @@ router.get('/new', (req, res) => {
   res.render('users/new.ejs');
 });
 
+router.get('/', (req, res) => {
+  // res.send('Index Route');
+  User.find({}, (error, allUsers) => {
+      res.render('users/index.ejs', {
+          users: allUsers,
+      });
+  });
+});
+
 // ADD EMPTY FORM TO USER SHOW PAGE TO ADD TWEET TO A USER
 // hard coded paths should be above this - "new" would hit this path if it was above
 router.get('/:userId', (req, res) => {
@@ -25,6 +34,13 @@ router.post('/', (req, res) => {
     res.redirect(`/users/${newUser.id}`);
   });
 });
+
+  // DELETE
+  router.delete('/:id', (req, res) => {
+    User.findByIdAndRemove(req.params.id, (error) => {
+    res.redirect('/users');
+    });
+  });
 
 // CREATE TWEET EMBEDDED IN USER
 router.post('/:userId/tweets', (req, res) => {
