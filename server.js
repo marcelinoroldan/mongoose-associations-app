@@ -22,7 +22,9 @@ app.use(express.static('public'));
 app.use(methodOverride('_method'));
 
 // ABOVE our app.get() - if get user path look into usersController to get rest of path
-app.use('/users', require('./controllers/usersController'));
+app.use('/users', require('./controllers/usersController.js'));
+
+app.use('/albums', require('./controllers/albumsControllers.js'));
 
 app.get('/', (req, res) => {
   res.render('home.ejs');
